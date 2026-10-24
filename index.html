@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf4ff">
+  <meta name="description" content="A responsive weather dashboard with current conditions and a five-day forecast.">
+  <title>SkyCast — Weather Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="SkyCast home">
+        <span class="brand-mark" aria-hidden="true">☼</span>
+        <span>skycast<span class="brand-dot">.</span></span>
+      </a>
+      <div class="top-actions">
+        <button id="unit-toggle" class="icon-button unit-button" type="button" aria-label="Switch temperature unit">°C <span class="unit-divider">/</span> °F</button>
+        <button id="theme-toggle" class="icon-button" type="button" aria-label="Switch to dark theme" title="Toggle theme"><span aria-hidden="true">☾</span></button>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro">
+        <p class="eyebrow">YOUR PERSONAL WEATHER SPACE</p>
+        <h1>Weather, at a glance<span class="heading-period">.</span></h1>
+        <p class="intro-copy">A little clarity for whatever the day brings.</p>
+      </section>
+
+      <section class="search-panel" aria-label="Find a city">
+        <form id="search-form" class="search-form" role="search">
+          <label class="sr-only" for="city-input">Search city</label>
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="city-input" name="city" type="search" placeholder="Search for a city…" autocomplete="off" required>
+          <button class="primary-button" type="submit">Search <span aria-hidden="true">↗</span></button>
+        </form>
+        <button id="location-button" class="location-button" type="button"><span aria-hidden="true">◎</span> Use my location</button>
+      </section>
+
+      <div id="status-message" class="status-message" role="status" aria-live="polite" hidden></div>
+
+      <section id="weather-content" aria-label="Weather dashboard" hidden>
+        <div class="section-heading current-heading">
+          <div>
+            <p class="eyebrow">CURRENT WEATHER</p>
+            <h2 id="city-name">—</h2>
+            <p id="local-date" class="muted">—</p>
+          </div>
+          <div class="heading-actions">
+            <button id="favorite-button" class="outline-button" type="button" aria-pressed="false">♡ <span>Add favorite</span></button>
+            <button id="refresh-button" class="icon-button refresh-button" type="button" aria-label="Refresh weather" title="Refresh weather">↻</button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="current-card">
+            <div class="current-card-top">
+              <div>
+                <p class="card-kicker">RIGHT NOW</p>
+                <div class="temperature-line"><span id="current-temp">--</span><span class="degree">°</span></div>
+                <p id="weather-description" class="weather-description">—</p>
+              </div>
+              <img id="current-icon" class="current-weather-icon" alt="Current weather icon" width="116" height="116">
+            </div>
+            <div class="feels-row">
+              <span>Feels like <strong id="feels-like">--°</strong></span>
+              <span class="feels-divider" aria-hidden="true"></span>
+              <span>H: <strong id="high-temp">--°</strong></span>
+              <span>L: <strong id="low-temp">--°</strong></span>
+            </div>
+            <div class="sun-times">
+              <div><span class="sun-symbol" aria-hidden="true">↗</span><span><small>Sunrise</small><strong id="sunrise">—</strong></span></div>
+              <div><span class="sun-symbol sunset" aria-hidden="true">↘</span><span><small>Sunset</small><strong id="sunset">—</strong></span></div>
+            </div>
+          </article>
+
+          <section class="details-section" aria-label="Weather details">
+            <div class="section-heading compact-heading">
+              <div><p class="eyebrow">THE DETAILS</p><h3>Weather conditions</h3></div>
+            </div>
+            <div class="details-grid">
+              <article class="detail-card"><span class="detail-icon humidity" aria-hidden="true">◌</span><p>Humidity</p><strong id="humidity">--%</strong><small>Relative moisture</small></article>
+              <article class="detail-card"><span class="detail-icon wind" aria-hidden="true">≋</span><p>Wind speed</p><strong id="wind-speed">--</strong><small id="wind-unit">m/s</small></article>
+              <article class="detail-card"><span class="detail-icon pressure" aria-hidden="true">◉</span><p>Pressure</p><strong id="pressure">-- hPa</strong><small>Atmospheric pressure</small></article>
+              <article class="detail-card"><span class="detail-icon visibility" aria-hidden="true">◎</span><p>Visibility</p><strong id="visibility">--</strong><small>Distance in km</small></article>
+            </div>
+          </section>
+        </div>
+
+        <section class="forecast-section">
+          <div class="section-heading">
+            <div><p class="eyebrow">PLAN AHEAD</p><h2>5-day forecast</h2></div>
+            <p class="muted forecast-note">A quick look at the days ahead</p>
+          </div>
+          <div id="forecast-grid" class="forecast-grid"></div>
+        </section>
+      </section>
+
+      <section class="favorites-section">
+        <div class="section-heading favorites-heading"><div><p class="eyebrow">YOUR SHORTLIST</p><h2>Favorite cities</h2></div><span id="favorite-count" class="count-pill">0 saved</span></div>
+        <div id="favorites-list" class="favorites-list">
+          <p class="empty-favorites">Your favorite cities will appear here. Search for a city and save it with ♡.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span><span class="brand-mark small" aria-hidden="true">☼</span> Made for curious skies.</span>
+      <span id="last-updated">Waiting for weather data</span>
+    </footer>
+  </div>
+  <div id="loading-overlay" class="loading-overlay" hidden aria-live="polite" aria-label="Loading weather">
+    <div class="loading-card"><span class="spinner" aria-hidden="true"></span><strong>Reading the skies…</strong><span class="muted">Getting the latest forecast</span></div>
+  </div>
+</body>
+</html>
